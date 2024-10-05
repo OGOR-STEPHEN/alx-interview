@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 
+
 """
 This module defines a function pascal_triangle which generates
 Pascal's Triangle up to a given number of rows, and a helper function
 print_triangle to print the triangle in a formatted way.
 """
+
 
 def pascal_triangle(n):
     """
@@ -31,6 +33,7 @@ def pascal_triangle(n):
         triangle.append(row)
     
     return triangle
+
 
 def print_triangle(triangle):
     """
