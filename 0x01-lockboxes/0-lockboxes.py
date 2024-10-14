@@ -1,51 +1,49 @@
 #!/usr/bin/python3
 
+"""
+Module to determine if all locked boxes can be unlocked.
+
+The canUnlockAll function checks if all boxes in a list of locked boxes can be unlocked
+based on the keys available inside the boxes.
+
+Each box is numbered sequentially, and a key with the same number as a box opens that box.
+
+Functions:
+    - canUnlockAll(boxes): Determines if all boxes can be unlocked.
+
+Usage Example:
+    boxes = [[1], [2], [3], []]
+    result = canUnlockAll(boxes)
+    print(result)  # Output: True
+"""
+
 def canUnlockAll(boxes):
     """
-    Determines if all boxes in a list of boxes can be unlocked.
+    Determines if all boxes can be unlocked.
 
-    Each box may contain keys to unlock other boxes. The first box is unlocked by default,
-    and we use the keys found in each box to unlock others. The goal is to check if
-    all boxes can be unlocked.
-
-    Parameters:
-    boxes (list of lists): A list where each element represents a box containing a list of keys.
+    Args:
+        boxes (list of lists): A list where each element is a list of keys in a box.
+                               Each key is an integer representing a box it can unlock.
 
     Returns:
-    bool: True if all boxes can be unlocked, False otherwise.
-
-    Example:
-    >>> canUnlockAll([[1], [2], [3], [4], []])
-    True
-
-    >>> canUnlockAll([[1, 3], [3, 0, 1], [2], [0]])
-    True
-
-    >>> canUnlockAll([[1, 2], [0], [0, 1]])
-    False
+        bool: True if all boxes can be unlocked, otherwise False.
     """
-
-    # Total number of boxes
     n = len(boxes)
+    unlocked = [False] * n  # Track which boxes are unlocked
+    unlocked[0] = True  # The first box is always unlocked
+    keys = [0]  # Start with the first box's keys
 
-    # A list to track which boxes are unlocked. Initially, only box 0 is unlocked.
-    unlocked = [False] * n
-    unlocked[0] = True  # Box 0 is unlocked by default
-
-    # Stack of keys we have collected, starting with box 0's keys
-    keys = [0]
-
-    # While there are still keys to process
     while keys:
-        # Take one key to try to unlock the corresponding box
-        current_key = keys.pop()
-
-        # Try to unlock all boxes corresponding to the keys in the current box
-        for key in boxes[current_key]:
-            # Only unlock valid boxes and skip boxes that are already unlocked
-            if key < n and not unlocked[key]:
+        box = keys.pop()  # Take a key (a box number)
+        for key in boxes[box]:  # Explore all keys inside this box
+            if key < n and not unlocked[key]:  # If the box is valid and not yet unlocked
                 unlocked[key] = True  # Unlock the box
-                keys.append(key)  # Add keys from this newly unlocked box to explore further
+                keys.append(key)  # Add keys from the newly unlocked box
 
-    # If all boxes are unlocked, return True; otherwise, return False
+    # If all boxes are unlocked, return True, else False
     return all(unlocked)
+
+# Example usage
+if name == "main":
+    boxes = [[1], [2], [3], []]
+    print(canUnlockAll(boxes))  # Output: True
