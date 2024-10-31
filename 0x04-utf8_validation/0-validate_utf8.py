@@ -35,5 +35,13 @@ def validUTF8(data: List[int]) -> bool:
     return num_bytes == 0
 
 # Test with the example provided
-test_data = [197, 130, 1]
+test_data = [65]
+print(validUTF8(test_data))
+
+# Test with the example provided
+test_data = [80, 121, 116, 104, 111, 110, 32, 105, 115, 32, 99, 111, 111, 108, 33]
+print(validUTF8(test_data))
+
+# Test with the example provided
+test_data = [229, 65, 127, 256]
 print(validUTF8(test_data))  # Expected output: True
