@@ -1,5 +1,9 @@
 #!/usr/bin/python3
 
+"""
+Module for calculating the number of boxes that can be opened.
+"""
+
 def canUnlockAll(boxes):
     """
     Determines if all the boxes can be opened.
