@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+
+
 """
 Module to read stdin line by line and compute metrics based on input format.
 """
