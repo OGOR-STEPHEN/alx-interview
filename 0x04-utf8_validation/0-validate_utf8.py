@@ -4,6 +4,7 @@
 Script to validate if a given dataset represents a valid UTF-8 encoding.
 """
 
+
 def validUTF8(data):
     # Number of bytes in the current UTF-8 character
     num_bytes = 0
