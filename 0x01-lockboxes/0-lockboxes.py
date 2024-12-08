@@ -4,12 +4,13 @@
 Module for calculating the number of boxes that can be opened.
 """
 
+
 def canUnlockAll(boxes):
     """
     Determines if all the boxes can be opened.
 
     Args:
-        boxes (list of list of int): A list where each element is a list of keys
+    boxes (list of list of int): A list where each element is a list of keys
                                      contained in a box.
 
     Returns:
@@ -26,7 +27,7 @@ def canUnlockAll(boxes):
     while keys:
         new_keys = set()  # Collect new keys during this iteration
         for key in keys:
-            if 0 <= key < n and not opened[key]:  # Key is valid and box is not already opened
+            if 0 <= key < n and not opened[key]:
                 opened[key] = True
                 new_keys.update(boxes[key])  # Add new keys found in the box
         keys = new_keys  # Update keys with newly collected keys
