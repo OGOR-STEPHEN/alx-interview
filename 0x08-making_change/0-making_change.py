@@ -6,21 +6,19 @@ Module for calculating the probability of change among items.
 
 
 def makeChange(coins, total):
+    def helper(remaining, index):
+        if remaining == 0:
+            return 0
+        if remaining < 0 or index >= len(coins):
+            return float('inf')
+        use_coin = 1 + helper(remaining - coins[index], index)
+        skip_coin = helper(remaining, index + 1)
+        return min(use_coin, skip_coin)
+
     if total <= 0:
         return 0
     if not coins:
         return -1
 
-    # Sort coins for consistency in processing
-    coins.sort()
-
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0
-
-    for coin in coins:
-        for amount in range(coin, total + 1):
-            if dp[amount - coin] != float('inf'):
-                dp[amount] = min(dp[amount], dp[amount - coin] + 1)
-
-    result = dp[total]
+    result = helper(total, 0)
     return result if result != float('inf') else -1
