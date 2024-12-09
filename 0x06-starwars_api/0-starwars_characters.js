@@ -1,24 +1,42 @@
-#!/usr/bin/env node
+#!/usr/bin/node
+
 const request = require('request');
+const movieId = process.argv[2];
+const apiUrl = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
 
-const getMovieCharacters = (movieId) => {
-  const url = `https://swapi.dev/api/films/${movieId}/`;
-  request(url, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      const movieData = JSON.parse(body);
-      movieData.characters.forEach((characterUrl) => {
-        request(characterUrl, (charError, charResponse, charBody) => {
-          if (!charError && charResponse.statusCode === 200) {
-            const characterData = JSON.parse(charBody);
-            console.log(characterData.name);
-          }
-        });
-      });
-    }
-  });
-};
-
-if (require.main === module) {
-  const movieId = process.argv[2];
-  getMovieCharacters(movieId);
+if (!movieId) {
+  console.error('Usage: ./0-starwars_characters.js <Movie ID>');
+  process.exit(1);
 }
+
+request(apiUrl, (error, response, body) => {
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (response.statusCode !== 200) {
+    console.error(`Error: Received status code ${response.statusCode}`);
+    return;
+  }
+
+  const filmData = JSON.parse(body);
+  const characterUrls = filmData.characters;
+
+  characterUrls.forEach((url) => {
+    request(url, (charError, charResponse, charBody) => {
+      if (charError) {
+        console.error(charError);
+        return;
+      }
+
+      if (charResponse.statusCode !== 200) {
+        console.error(`Error: Received status code ${charResponse.statusCode} for character URL ${url}`);
+        return;
+      }
+
+      const characterData = JSON.parse(charBody);
+      console.log(characterData.name);
+    });
+  });
+});
